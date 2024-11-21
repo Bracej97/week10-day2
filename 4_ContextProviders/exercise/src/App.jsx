@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import Tweet from './components/Tweet';
+import { AppProvider } from './contexts/AppContext';
+import ThemeSelector from './components/ThemeSelector';
+import Display from './components/Display';
+import UserId from './components/UserId';
 
 import './App.css';
 
@@ -48,30 +52,30 @@ function App() {
   };
 
   return (
-    <div style={appStyles}>
-      <h1>Y!?</h1>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <label style={{ fontWeight: 'bold' }}>T' Dark Mode</label>
-        <input type="checkbox" checked={darkMode} onChange={toggleTheme} />
-      </div>
-      <div style={{ marginBottom: '20px' }}>
-        <textarea
-          value={newTweet}
-          onChange={handleInputChange}
-          placeholder="What's happening t' thee?"
-          rows="3"
-          style={{ width: '95%', padding: '10px', fontSize: '16px' }}
-        />
-        <button onClick={handlePostTweet} style={buttonStyles}>
-          Send t' message
-        </button>
-      </div>
-      <div>
-        {tweets.map((tweet, index) => (
-          <Tweet key={index} username={tweet.username} content={tweet.content} />
-        ))}
-      </div>
-    </div>
+    <AppProvider>
+      <Display>
+        <h1>Y!?</h1>
+        <UserId />
+        <ThemeSelector />
+        <div style={{ marginBottom: '20px' }}>
+          <textarea
+            value={newTweet}
+            onChange={handleInputChange}
+            placeholder="What's happening t' thee?"
+            rows="3"
+            style={{ width: '95%', padding: '10px', fontSize: '16px' }}
+          />
+          <button onClick={handlePostTweet} style={buttonStyles}>
+            Send t' message
+          </button>
+        </div>
+        <div>
+          {tweets.map((tweet, index) => (
+            <Tweet key={index} username={tweet.username} content={tweet.content} />
+          ))}
+        </div>
+      </Display>
+    </AppProvider>
   );
 }
 
